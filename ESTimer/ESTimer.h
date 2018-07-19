@@ -20,7 +20,6 @@ typedef enum : NSUInteger {
 
 @interface ESTimer : NSObject
 
-+(ESTimer *)shareInstance;
 
 -(void)startTimerWithTimerType:(ESTimerType)timerType startTimerBlock:(StartTimerBlock)startTimerBlock;
 -(void)startTimerWithTimerType:(ESTimerType)timerType timeInterval:(CGFloat)timeInterval startTimerBlock:(StartTimerBlock)startTimerBlock;

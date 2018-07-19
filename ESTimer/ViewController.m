@@ -23,6 +23,10 @@
 @property (strong, nonatomic) IBOutlet UILabel *gcdTimerSecondLabel;
 @property (strong, nonatomic) IBOutlet UIButton *gcdTimerStartBtn;
 
+@property (nonatomic, strong) ESTimer *timer_def;
+@property (nonatomic, strong) ESTimer *timer_cad;
+@property (nonatomic, strong) ESTimer *timer_gcd;
+
 @end
 
 @implementation ViewController
@@ -55,18 +59,22 @@
 
 - (IBAction)defaultTimerStartBtnAction:(UIButton *)sender
 {
+    if(!self.timer_def)
+    {
+        self.timer_def = [ESTimer new];
+    }
     __weak typeof(self) weakSelf = self;
     if([sender.currentTitle isEqual:@"Start"])
     {
         [sender setTitle:@"Stop" forState:(UIControlStateNormal)];
-        [[ESTimer shareInstance] startTimerWithTimerType:ESTimerTypeDefault startTimerBlock:^(CGFloat seconds) {
+        [self.timer_def startTimerWithTimerType:ESTimerTypeDefault startTimerBlock:^(CGFloat seconds) {
             weakSelf.defaultTimerSecondLabel.text = [NSString stringWithFormat:@"%.fs", seconds];
         }];
     }
     else
     {
         [sender setTitle:@"Start" forState:(UIControlStateNormal)];
-        [[ESTimer shareInstance] stopTimerWithTimerType:ESTimerTypeDefault stopTimerBlock:^{
+        [self.timer_def stopTimerWithTimerType:ESTimerTypeDefault stopTimerBlock:^{
             weakSelf.defaultTimerSecondLabel.text = @"0";
         }];
     }
@@ -74,18 +82,22 @@
 
 - (IBAction)cadTimerStartBtnAction:(UIButton *)sender
 {
+    if(!self.timer_cad)
+    {
+        self.timer_cad = [ESTimer new];
+    }
     __weak typeof(self) weakSelf = self;
     if([sender.currentTitle isEqual:@"Start"])
     {
         [sender setTitle:@"Stop" forState:(UIControlStateNormal)];
-        [[ESTimer shareInstance] startTimerWithTimerType:ESTimerTypeCAD startTimerBlock:^(CGFloat seconds) {
+        [self.timer_cad startTimerWithTimerType:ESTimerTypeCAD startTimerBlock:^(CGFloat seconds) {
             weakSelf.cadTimerSecondLabel.text = [NSString stringWithFormat:@"%.fs", seconds];
         }];
     }
     else
     {
         [sender setTitle:@"Start" forState:(UIControlStateNormal)];
-        [[ESTimer shareInstance] stopTimerWithTimerType:ESTimerTypeCAD stopTimerBlock:^{
+        [self.timer_cad stopTimerWithTimerType:ESTimerTypeCAD stopTimerBlock:^{
             weakSelf.cadTimerSecondLabel.text = @"0";
         }];
     }
@@ -93,18 +105,22 @@
 
 - (IBAction)gcdTimrStartBtnAction:(UIButton *)sender
 {
+    if(!self.timer_gcd)
+    {
+        self.timer_gcd = [ESTimer new];
+    }
     __weak typeof(self) weakSelf = self;
     if([sender.currentTitle isEqual:@"Start"])
     {
         [sender setTitle:@"Stop" forState:(UIControlStateNormal)];
-        [[ESTimer shareInstance] startTimerWithTimerType:ESTimerTypeGCD startTimerBlock:^(CGFloat seconds) {
+        [self.timer_gcd startTimerWithTimerType:ESTimerTypeGCD startTimerBlock:^(CGFloat seconds) {
             weakSelf.gcdTimerSecondLabel.text = [NSString stringWithFormat:@"%.fs", seconds];
         }];
     }
     else
     {
         [sender setTitle:@"Start" forState:(UIControlStateNormal)];
-        [[ESTimer shareInstance] stopTimerWithTimerType:ESTimerTypeGCD stopTimerBlock:^{
+        [self.timer_gcd stopTimerWithTimerType:ESTimerTypeGCD stopTimerBlock:^{
             weakSelf.gcdTimerSecondLabel.text = @"0";
         }];
     }
